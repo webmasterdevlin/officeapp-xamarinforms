@@ -1,10 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms" prism:ViewModelLocator.AutowireViewModel="True" x:Class="OfficeAppMobile.Views.NewDepartmentPage" Visual="Material">
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             prism:ViewModelLocator.AutowireViewModel="True" x:Class="OfficeAppMobile.Views.NewDepartmentPage"
+             Title="New Department Form" Visual="Material">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Order="Primary" Text="Logout" Command="{Binding LogoutCommand}" />
+    </ContentPage.ToolbarItems>
     <StackLayout Margin="20">
-        <Entry Placeholder="e.g. HR" />
-        <Entry Placeholder="e.g. Human Resources" />
-        <Entry Placeholder="e.g. Xander Ford" />
-        <Entry Placeholder="e.g. 002" />
-        <Button Text="Save" BackgroundColor="Purple" />
+        <Entry
+            Placeholder="e.g. HR"
+            Text="{Binding NewName, Mode=TwoWay}" />
+        <Entry
+            Placeholder="e.g. Human Resources"
+            Text="{Binding NewDescription, Mode=TwoWay}" />
+        <Entry
+            Placeholder="e.g. Satya Nadella"
+            Text="{Binding NewHead, Mode=TwoWay}" />
+        <Entry
+            Placeholder="e.g. 002"
+            Text="{Binding NewCode, Mode=TwoWay}" />
+        <Button
+            BackgroundColor="#631DE4"
+            TextColor="White"
+            CornerRadius="5"
+            Command="{Binding SaveCommand}"
+            Text="Save"
+            VerticalOptions="Center" />
     </StackLayout>
 </ContentPage>

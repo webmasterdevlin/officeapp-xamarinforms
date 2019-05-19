@@ -9,18 +9,18 @@
         <Image Source="officebg.jpeg"  Aspect="AspectFill" />
         <StackLayout Padding="20" Orientation="Vertical" Spacing="20" VerticalOptions="Center">
             <Image HorizontalOptions="Center" Source="company_logo.png" />
-            <ActivityIndicator Color="Crimson" IsEnabled="true" IsRunning="true" />
+            <ActivityIndicator Color="Crimson" IsEnabled="{Binding IsLogging}" IsRunning="{Binding IsLogging}" />
             <Label Text="Office App" TextColor="Orange" FontSize="32" HorizontalOptions="Center" VerticalOptions="StartAndExpand" />
-            <Entry BackgroundColor="Transparent" Keyboard="Email" PlaceholderColor="LightGray" Placeholder="email:" TextColor="White" Text="Email" />
-            <Entry BackgroundColor="Transparent" IsPassword="True" PlaceholderColor="LightGray" Placeholder="password:" TextColor="White" Text="Password"  />
-            <Button BackgroundColor="Orange" CornerRadius="5" FontSize="Large" Text="Log In" TextColor="White" />
+            <Entry BackgroundColor="Transparent" Keyboard="Email" PlaceholderColor="LightGray" Placeholder="email:" TextColor="White" Text="{Binding Email}" />
+            <Entry BackgroundColor="Transparent" IsPassword="True" PlaceholderColor="LightGray" Placeholder="password:" TextColor="White" Text="{Binding Password}"  />
+            <Button BackgroundColor="Orange" CornerRadius="5" FontSize="Large" Text="Log In" TextColor="White" Command="{Binding LoginCommand}" />
             <Label HorizontalOptions="Center" TextColor="DarkGray">
                 <Label.FormattedText>
                     <FormattedString>
                         <Span Text="Not yet registered? " />
                         <Span Text="Sign Up" FontAttributes="Bold">
                             <Span.GestureRecognizers>
-                                <TapGestureRecognizer  />
+                                <TapGestureRecognizer  Command="{Binding ToSignupPageCommand}"   />
                             </Span.GestureRecognizers>
                         </Span>
                     </FormattedString>

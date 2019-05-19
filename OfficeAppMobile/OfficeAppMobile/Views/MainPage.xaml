@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="OfficeAppMobile.Views.MainPage" Title="Title" Visual="Material">
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="OfficeAppMobile.Views.MainPage" Visual="Material">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Order="Primary" Text="Logout" />
+        <ToolbarItem Order="Primary" Text="Logout" Command="{Binding LogoutCommand}" />
     </ContentPage.ToolbarItems>
     <ContentPage.Resources>
         <StyleSheet><![CDATA[
@@ -24,16 +24,16 @@
                         <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Label Grid.Row="0" FontSize="Large" HorizontalOptions="Center" Text="Departments" />
-        <ListView x:Name="DeptListView" Grid.Row="1" Grid.RowSpan="2" HasUnevenRows="True">
+        <ListView x:Name="DeptListView" Grid.Row="1" Grid.RowSpan="2" HasUnevenRows="True" ItemsSource="{Binding ObservableDepartments}" >
             <ListView.GestureRecognizers>
-                <TapGestureRecognizer />
+                <SwipeGestureRecognizer></SwipeGestureRecognizer>
             </ListView.GestureRecognizers>
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <TextCell Detail="Description" Text="Name" />
+                    <TextCell Command="{Binding BindingContext.EditDeleteCommand, Source={x:Reference DeptListView}}" CommandParameter="{Binding .}"  Detail="{Binding Description}" Text="{Binding Name}" />
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <Button Grid.Row="4" FontSize="Large" CornerRadius="25" VerticalOptions="Center" HorizontalOptions="End" Text="+" StyleClass="fab" />
+        <Button Grid.Row="4" FontSize="Large" CornerRadius="25" VerticalOptions="Center" HorizontalOptions="End" Text="+" StyleClass="fab" Command="{Binding ToNewDepPageCommand}" />
     </Grid>
 </ContentPage>

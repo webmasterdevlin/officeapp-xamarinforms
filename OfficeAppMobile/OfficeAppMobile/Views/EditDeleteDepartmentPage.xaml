@@ -3,13 +3,27 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
-             x:Class="OfficeAppMobile.Views.EditDeleteDepartmentPage" Visual="Material">
+             x:Class="OfficeAppMobile.Views.EditDeleteDepartmentPage" Title="{Binding CurrentDepartment.Name}" Visual="Material">
       <StackLayout Margin="20">
-        <Entry />
-        <Entry />
-        <Entry />
-        <Entry />
-        <Button Text="Update" BackgroundColor="Gray" />
-        <Button Text="Delete" BackgroundColor="Crimson" />
+          <Entry
+              Text="{Binding CurrentDepartment.Name, Mode=TwoWay}" />
+          <Entry
+              Text="{Binding CurrentDepartment.Description, Mode=TwoWay}" />
+          <Entry
+              Text="{Binding CurrentDepartment.Head, Mode=TwoWay}" />
+          <Entry
+              Text="{Binding CurrentDepartment.Code, Mode=TwoWay}" />
+          <Button
+              CornerRadius="5"
+              BackgroundColor="Gray"
+              Command="{Binding UpdateCommand}"
+              Text="Update"
+              VerticalOptions="Center" />
+          <Button
+              CornerRadius="5"
+              BackgroundColor="Purple"
+              Command="{Binding DeleteCommand}"
+              Text="Delete"
+              VerticalOptions="Center" />
     </StackLayout>
 </ContentPage>

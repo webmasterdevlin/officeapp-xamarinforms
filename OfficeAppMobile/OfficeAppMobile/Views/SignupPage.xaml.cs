@@ -7,6 +7,8 @@ namespace OfficeAppMobile.Views
         public SignupPage()
         {
             InitializeComponent();
+            
+            NavigationPage.SetHasNavigationBar(this, false);
         }
     }
 }

@@ -7,6 +7,10 @@ namespace OfficeAppMobile.Views
         public LoginPage()
         {
             InitializeComponent();
+            
+            NavigationPage.SetHasNavigationBar(this, false);
+            
+//            On<Xamarin.Forms.PlatformConfiguration.iOS>().SetUseSafeArea(true);
         }
     }
 }

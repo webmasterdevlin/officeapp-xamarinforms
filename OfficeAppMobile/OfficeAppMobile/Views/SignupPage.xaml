@@ -5,14 +5,13 @@
         <StackLayout Padding="20" Orientation="Vertical" Spacing="20" VerticalOptions="Center">
             <Image HorizontalOptions="Center" Source="company_logo.png" />
             <Label Text="Office App" TextColor="YellowGreen" FontSize="32" HorizontalOptions="Center" VerticalOptions="StartAndExpand" />
-            <Entry BackgroundColor="Transparent" PlaceholderColor="LightGray" TextColor="White" Placeholder="username" />
-            <Entry BackgroundColor="Transparent" PlaceholderColor="LightGray" TextColor="White" Placeholder="email" Keyboard="Email" />
-            <Entry BackgroundColor="Transparent" PlaceholderColor="LightGray" TextColor="White" IsPassword="True" Placeholder="password" />
-            <Entry BackgroundColor="Transparent" PlaceholderColor="LightGray" TextColor="White" IsPassword="True" Placeholder="confirm password" />
-            <Button BackgroundColor="YellowGreen" CornerRadius="5" FontSize="Large" Text="Register" TextColor="White" />
+            <Entry BackgroundColor="Transparent" PlaceholderColor="LightGray" TextColor="White" Placeholder="email" Keyboard="Email" Text="{Binding Email}"  />
+            <Entry BackgroundColor="Transparent" PlaceholderColor="LightGray" TextColor="White" IsPassword="True" Placeholder="password" Text="{Binding Password}"/>
+            <Entry BackgroundColor="Transparent" PlaceholderColor="LightGray" TextColor="White" IsPassword="True" Placeholder="confirm password" Text="{Binding ConfirmPassword}" />
+            <Button BackgroundColor="YellowGreen" CornerRadius="5" FontSize="Large" Text="Register" TextColor="White" Command="{Binding SignupCommand}" />
             <Label HorizontalOptions="Center" Text="Back to login" TextColor="DarkGray">
                 <Label.GestureRecognizers>
-                    <TapGestureRecognizer />
+                    <TapGestureRecognizer Command="{Binding GoToLoginPageCommand}" />
                 </Label.GestureRecognizers>
             </Label>
         </StackLayout>
