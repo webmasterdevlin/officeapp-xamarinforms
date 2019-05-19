@@ -1,8 +1,20 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
-             prism:ViewModelLocator.AutowireViewModel="True"
-             x:Class="OfficeAppMobile.Views.SignupPage">
-  
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms" xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" prism:ViewModelLocator.AutowireViewModel="True" x:Class="OfficeAppMobile.Views.SignupPage" BackgroundColor="DodgerBlue" ios:Page.UseSafeArea="true">
+    <Grid BackgroundColor="White">
+        <Image Source="officebg.jpeg" Aspect="AspectFill" />
+        <StackLayout Padding="20" Orientation="Vertical" Spacing="20" VerticalOptions="Center">
+            <Image HorizontalOptions="Center" Source="company_logo.png" />
+            <Label Text="Office App" TextColor="YellowGreen" FontSize="32" HorizontalOptions="Center" VerticalOptions="StartAndExpand" />
+            <Entry BackgroundColor="Transparent" PlaceholderColor="LightGray" TextColor="White" Placeholder="username" />
+            <Entry BackgroundColor="Transparent" PlaceholderColor="LightGray" TextColor="White" Placeholder="email" Keyboard="Email" />
+            <Entry BackgroundColor="Transparent" PlaceholderColor="LightGray" TextColor="White" IsPassword="True" Placeholder="password" />
+            <Entry BackgroundColor="Transparent" PlaceholderColor="LightGray" TextColor="White" IsPassword="True" Placeholder="confirm password" />
+            <Button BackgroundColor="YellowGreen" CornerRadius="5" FontSize="Large" Text="Register" TextColor="White" />
+            <Label HorizontalOptions="Center" Text="Back to login" TextColor="DarkGray">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer />
+                </Label.GestureRecognizers>
+            </Label>
+        </StackLayout>
+    </Grid>
 </ContentPage>

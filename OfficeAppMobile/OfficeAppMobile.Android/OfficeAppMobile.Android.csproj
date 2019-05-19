@@ -81,6 +81,16 @@
     <AndroidResource Include="Resources\mipmap-xhdpi\ic_launcher.png" />
     <AndroidResource Include="Resources\mipmap-xxhdpi\ic_launcher.png" />
     <AndroidResource Include="Resources\mipmap-xxxhdpi\ic_launcher.png" />
+    <AndroidResource Include="Resources\mipmap-hdpi\company_logo.png" />
+    <AndroidResource Include="Resources\mipmap-hdpi\officebg.jpeg" />
+    <AndroidResource Include="Resources\mipmap-xhdpi\company_logo.png" />
+    <AndroidResource Include="Resources\mipmap-xhdpi\officebg.jpeg" />
+    <AndroidResource Include="Resources\mipmap-xxxhdpi\company_logo.png" />
+    <AndroidResource Include="Resources\mipmap-xxxhdpi\officebg.jpeg" />
+    <AndroidResource Include="Resources\mipmap-xxhdpi\company_logo.png" />
+    <AndroidResource Include="Resources\mipmap-xxhdpi\officebg.jpeg" />
+    <AndroidResource Include="Resources\mipmap-mdpi\company_logo.png" />
+    <AndroidResource Include="Resources\mipmap-mdpi\officebg.jpeg" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\AndroidManifest.xml" />
@@ -94,7 +104,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OfficeAppMobile\OfficeAppMobile.csproj">
-      <Project>{A682884C-CB44-4A89-B752-27BB634E0ABE}</Project>
+      <Project>{AB8C8136-710D-4926-BA92-B956DA5F95BE}</Project>
       <Name>OfficeAppMobile</Name>
     </ProjectReference>
   </ItemGroup>

@@ -1,11 +1,39 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="OfficeAppMobile.Views.MainPage"
-             Title="{Binding Title}">
-
-    <StackLayout Visual="Material" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
-        <Label Text="Welcome to Xamarin Forms and Prism!" />
-    </StackLayout>
-
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="OfficeAppMobile.Views.MainPage" Title="Title" Visual="Material">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Order="Primary" Text="Logout" />
+    </ContentPage.ToolbarItems>
+    <ContentPage.Resources>
+        <StyleSheet><![CDATA[
+            .fab {
+                color: White;
+                font-size: 25;
+                background-color: #631DE4;
+                width: 50;
+                height: 50;
+                margin-right: 15;
+                margin-bottom: 15;
+            }
+            ]]></StyleSheet>
+    </ContentPage.Resources>
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="5*" />
+            <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" FontSize="Large" HorizontalOptions="Center" Text="Departments" />
+        <ListView x:Name="DeptListView" Grid.Row="1" Grid.RowSpan="2" HasUnevenRows="True">
+            <ListView.GestureRecognizers>
+                <TapGestureRecognizer />
+            </ListView.GestureRecognizers>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextCell Detail="Description" Text="Name" />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Button Grid.Row="4" FontSize="Large" CornerRadius="25" VerticalOptions="Center" HorizontalOptions="End" Text="+" StyleClass="fab" />
+    </Grid>
 </ContentPage>

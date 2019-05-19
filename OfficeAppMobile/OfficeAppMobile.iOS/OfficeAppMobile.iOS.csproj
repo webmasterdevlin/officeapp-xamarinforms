@@ -181,6 +181,10 @@
     <BundleResource Include="Resources\Default.png" />
     <BundleResource Include="Resources\Default@2x.png" />
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
+    <BundleResource Include="Resources\company_logo.png" />
+    <BundleResource Include="Resources\company_logo%402x.png" />
+    <BundleResource Include="Resources\company_logo%403x.png" />
+    <BundleResource Include="Resources\officebg.jpeg" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -197,7 +201,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OfficeAppMobile\OfficeAppMobile.csproj">
-      <Project>{A682884C-CB44-4A89-B752-27BB634E0ABE}</Project>
+      <Project>{AB8C8136-710D-4926-BA92-B956DA5F95BE}</Project>
       <Name>OfficeAppMobile</Name>
     </ProjectReference>
   </ItemGroup>
