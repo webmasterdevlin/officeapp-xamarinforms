@@ -9,8 +9,7 @@ using OfficeApp.Helpers;
 using OfficeAppMobile.Models;
 using OfficeAppMobile.Services;
 using Prism.Services;
-using JWT.Builder;
-using JWT;
+using System.Threading.Tasks;
 
 namespace OfficeAppMobile.ViewModels
 {
@@ -42,42 +41,21 @@ namespace OfficeAppMobile.ViewModels
 
         public override async void OnNavigatingTo(INavigationParameters parameters)
         {
-            if (Settings.Jwt == "")
+            if (CheckIfJwtIsEmpty() || CheckIfJwtIsExpired())
             {
-                await NavigationService.NavigateAsync("LoginPage", useModalNavigation: true);
-                return;
-            }
-
-            if (DateTime.Now > Settings.JwtExpirationDate)
-            {
-                await NavigationService.NavigateAsync("LoginPage", useModalNavigation: true);
+                await NavigationService.NavigateAsync("LoginPage");
                 return;
             }
 
             try
             {
-                var json = new JwtBuilder()
-                    .WithSecret(Settings.Jwt)
-                    .Decode(Settings.Jwt);
-                Console.WriteLine(json);
-            }
-            catch (TokenExpiredException)
-            {
-                Console.WriteLine("Token has expired");
-            }
-
-            try
-            {
-                var contents = await _departmentService.SendGetAsync();
-                // JsonConvert is from Newtonsoft Library
-                var departments = JsonConvert.DeserializeObject<List<Department>>(contents);
-                ObservableDepartments = new ObservableCollection<Department>(departments);
+                await LoadDepartments();
             }
             catch (Exception ex)
             {
-                await PageDialogService.DisplayAlertAsync("Something happened", ex.Message, "Ok");
-                await NavigationService.NavigateAsync("/LoginPage");
+                await UnableToLoadDepartments(ex);
             }
+
             base.OnNavigatedTo(parameters);
         }
 
@@ -89,11 +67,34 @@ namespace OfficeAppMobile.ViewModels
             NavigationService.NavigateAsync("EditDeleteDepartmentPage", variableToPass);
         });
 
-        public DelegateCommand LogoutCommand => new DelegateCommand(async () =>
-           {
-               Settings.Jwt = "";
-               await NavigationService.NavigateAsync("/NavigationPage/LoginPage");
-           }
+        public DelegateCommand LogoutCommand => new DelegateCommand(() =>
+          {
+              Settings.Jwt = "";
+              NavigationService.NavigateAsync("/LoginPage");
+          }
         );
+
+        private async Task LoadDepartments()
+        {
+            var contents = await _departmentService.SendGetAsync();
+            var departments = JsonConvert.DeserializeObject<List<Department>>(contents);
+            ObservableDepartments = new ObservableCollection<Department>(departments);
+        }
+
+        private bool CheckIfJwtIsEmpty()
+        {
+            return Settings.Jwt == "";
+        }
+
+        private bool CheckIfJwtIsExpired()
+        {
+            return DateTime.Now > Settings.JwtExpirationDate;
+        }
+
+        private async Task UnableToLoadDepartments(Exception ex)
+        {
+            await PageDialogService.DisplayAlertAsync("Something happened", ex.Message, "Ok");
+            await NavigationService.NavigateAsync("LoginPage");
+        }
     }
 }

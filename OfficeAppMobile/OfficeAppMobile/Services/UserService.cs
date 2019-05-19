@@ -32,26 +32,32 @@ namespace OfficeAppMobile.Services
             using (var response = await _client.PostAsync(BaseUrl.SetLoginUrl(),
                 new StringContent(content, Encoding.UTF8, "application/json")))
             {
-                if (response.StatusCode == HttpStatusCode.Unauthorized)
+                if (response.StatusCode == HttpStatusCode.Unauthorized) return false;
+
+                if (response.IsSuccessStatusCode)
                 {
-                    return false;
-                }
-
-                else if (response.IsSuccessStatusCode)
-                {
-                    var stringResponse = await response.Content.ReadAsStringAsync();
-
-                    JObject jwtJObject = JsonConvert.DeserializeObject<dynamic>(stringResponse);
-                    UserToken userToken = JsonConvert.DeserializeObject<UserToken>(stringResponse);
-                    var decoded = new JwtBuilder().Decode(stringResponse);
-                    var userExp = JsonConvert.DeserializeObject<UserExp>(decoded);
-
-                    Settings.JwtExpirationDate = DateTimeOffset.FromUnixTimeSeconds(long.Parse(userExp.Exp)).DateTime;
-
+                    await SetJwtToken(response);
+                    await SetJwtExpirationDate(response);
                     return response.IsSuccessStatusCode;
                 }
+
                 return false;
             }
+        }
+
+        private static async Task SetJwtToken(HttpResponseMessage response)
+        {
+            var stringResponse = await response.Content.ReadAsStringAsync();
+            UserToken userToken = JsonConvert.DeserializeObject<UserToken>(stringResponse);
+            Settings.Jwt = userToken.Token;
+        }
+
+        private static async Task SetJwtExpirationDate(HttpResponseMessage response)
+        {
+            var stringResponse = await response.Content.ReadAsStringAsync();
+            var decoded = new JwtBuilder().Decode(stringResponse);
+            var userExp = JsonConvert.DeserializeObject<UserExp>(decoded);
+            Settings.JwtExpirationDate = DateTimeOffset.FromUnixTimeSeconds(long.Parse(userExp.Exp)).DateTime;
         }
     }
 

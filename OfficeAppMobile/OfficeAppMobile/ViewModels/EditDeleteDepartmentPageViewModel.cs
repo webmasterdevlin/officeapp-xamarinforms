@@ -1,17 +1,17 @@
 ﻿using Prism.Commands;
 using System;
-using System.Net.Http;
 using Newtonsoft.Json;
 using OfficeAppMobile.Models;
 using OfficeAppMobile.Services;
 using Prism.Navigation;
 using Prism.Services;
+using OfficeApp.Helpers;
+using System.Threading.Tasks;
 
 namespace OfficeAppMobile.ViewModels
 {
     public class EditDeleteDepartmentPageViewModel : ViewModelBase
     {
-        private readonly HttpClient _client = new HttpClient();
         private readonly DepartmentService _departmentService = new DepartmentService();
 
         private Department _currentDepartment;
@@ -33,8 +33,7 @@ namespace OfficeAppMobile.ViewModels
 
         public override void OnNavigatingTo(INavigationParameters parameters)
         {
-            if (parameters.ContainsKey("(^_^)ImTheKey"))
-                CurrentDepartment = (Department)parameters["(^_^)ImTheKey"];
+            GetDepartmentFromPreviousPage(parameters);
 
             base.OnNavigatingTo(parameters);
         }
@@ -45,12 +44,11 @@ namespace OfficeAppMobile.ViewModels
 
             try
             {
-                await _departmentService.SendPutAsync(CurrentDepartment, content);
-                await NavigationService.GoBackAsync();
+                await Update(content);
             }
             catch (Exception ex)
             {
-                await PageDialogService.DisplayAlertAsync("Something happened", ex.Message, "Ok");
+                await UnableToSendRequest(ex);
             }
         });
 
@@ -62,17 +60,42 @@ namespace OfficeAppMobile.ViewModels
 
             try
             {
-                await _departmentService.SendDeleteAsync(CurrentDepartment.Id);
-                await NavigationService.GoBackAsync();
+                await Remove();
             }
             catch (Exception ex)
             {
-                await PageDialogService.DisplayAlertAsync("Something happened", ex.Message, "Ok");
+                await UnableToSendRequest(ex);
             }
         });
 
         public DelegateCommand LogoutCommand => new DelegateCommand(async () =>
-            await NavigationService.NavigateAsync("/LoginPage")
+            {
+                Settings.Jwt = "";
+                await NavigationService.NavigateAsync("/LoginPage");
+            }
         );
+
+        private void GetDepartmentFromPreviousPage(INavigationParameters parameters)
+        {
+            if (parameters.ContainsKey("(^_^)ImTheKey"))
+                CurrentDepartment = (Department)parameters["(^_^)ImTheKey"];
+        }
+
+        private async Task Update(string content)
+        {
+            await _departmentService.SendPutAsync(CurrentDepartment, content);
+            await NavigationService.GoBackAsync();
+        }
+
+        private async Task Remove()
+        {
+            await _departmentService.SendDeleteAsync(CurrentDepartment.Id);
+            await NavigationService.GoBackAsync();
+        }
+
+        private async Task UnableToSendRequest(Exception ex)
+        {
+            await PageDialogService.DisplayAlertAsync("Something happened", ex.Message, "Ok");
+        }
     }
 }

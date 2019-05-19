@@ -41,12 +41,11 @@ namespace OfficeAppMobile.ViewModels
                 if (await _userService.LoginAsync(login))
                 {
                     await NavigationService.NavigateAsync("/NavigationPage/MainPage"); // Resets the Navigation Stack to prevent user from going back to LoginPage
+                    return;
                 }
-                else
-                {
-                    await PageDialogService.DisplayAlertAsync("Authentication failed", "Please try again",
+
+                await PageDialogService.DisplayAlertAsync("Authentication failed", "Please try again",
                   "OK");
-                }
             }
             catch (Exception ex)
             {

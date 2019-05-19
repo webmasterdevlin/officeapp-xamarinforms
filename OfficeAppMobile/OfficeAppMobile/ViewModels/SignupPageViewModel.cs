@@ -30,31 +30,46 @@ namespace OfficeAppMobile.ViewModels
 
         public DelegateCommand SignupCommand => new DelegateCommand(async () =>
         {
-            if (Password != ConfirmPassword)
+            if (string.IsNullOrEmpty(Email) || string.IsNullOrEmpty(Password))
             {
                 await PageDialogService.DisplayAlertAsync("Error Signing Up",
-                    "Password and confirm password are not matched ", "OK");
+                   "Please complete the form", "OK");
                 return;
             }
 
-            User user = new User
+            if (Password != ConfirmPassword)
+            {
+                await PageDialogService.DisplayAlertAsync("Error Signing Up",
+                    "Password and confirm password are not matched", "OK");
+                return;
+            }
+
+            try
+            {
+                await SignupNewUser();
+            }
+            catch (Exception ex)
+            {
+                await UnableToSignup(ex);
+            }
+
+        });
+
+        private async Task UnableToSignup(Exception ex)
+        {
+            await PageDialogService.DisplayAlertAsync("Soemthing happened", ex.Message,
+                    "Ok");
+        }
+
+        private async Task SignupNewUser()
+        {
+            await _userService.SignupAsync(new User
             {
                 UserName = UserName,
                 Email = Email,
                 Password = Password
-            };
-
-            try
-            {
-                await _userService.SignupAsync(user);
-                await GoToLogin();
-            }
-            catch (Exception ex)
-            {
-                await PageDialogService.DisplayAlertAsync("Soemthing happened", ex.Message,
-                        "Ok");
-            }
-
-        });
+            });
+            await GoToLogin();
+        }
     }
 }

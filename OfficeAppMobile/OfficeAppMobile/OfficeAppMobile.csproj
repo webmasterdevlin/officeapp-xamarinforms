@@ -29,4 +29,7 @@
     </EmbeddedResource>
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="Utils\Logout.cs" />
+  </ItemGroup>
 </Project>

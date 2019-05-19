@@ -14,7 +14,6 @@ namespace OfficeAppMobile.ViewModels
     {
         private readonly HttpClient _client = new HttpClient();
         private readonly DepartmentService _departmentService = new DepartmentService();
-        private HttpResponseMessage _response;
 
         public string NewName { get; set; }
         public string NewDescription { get; set; }
@@ -35,9 +34,10 @@ namespace OfficeAppMobile.ViewModels
 
             _client.DefaultRequestHeaders.Add("Authorization", $"Bearer {Settings.Jwt}");
 
-            //            Another option for using Content-Type
-            //            HttpContent httpContent = new StringContent(content);
-            //            httpContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            /*  Another option for using Content-Type
+            *  HttpContent httpContent = new StringContent(content);
+            *  httpContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            */
 
             var content = JsonConvert.SerializeObject(
                 new
@@ -51,7 +51,7 @@ namespace OfficeAppMobile.ViewModels
 
             try
             {
-                _response = await _departmentService.SendPostAsync(content);
+                await _departmentService.SendPostAsync(content);
                 await NavigationService.NavigateAsync("/NavigationPage/MainPage"); // reset the Navigation Stack
             }
             catch (Exception ex)
@@ -60,8 +60,11 @@ namespace OfficeAppMobile.ViewModels
             }
         });
 
-        public DelegateCommand LogoutCommand => new DelegateCommand(async () =>
-            await NavigationService.NavigateAsync("/NavigationPage/LoginPage")
-        );
+        public DelegateCommand LogoutCommand => new DelegateCommand(() =>
+        {
+            Settings.Jwt = "";
+            NavigationService.NavigateAsync("/LoginPage");
+        }
+            );
     }
 }
