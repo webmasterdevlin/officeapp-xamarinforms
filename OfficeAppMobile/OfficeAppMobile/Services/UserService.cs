@@ -1,7 +1,10 @@
+using System;
 using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using JWT;
+using JWT.Builder;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using OfficeApp.Helpers;
@@ -39,12 +42,11 @@ namespace OfficeAppMobile.Services
                     var stringResponse = await response.Content.ReadAsStringAsync();
 
                     JObject jwtJObject = JsonConvert.DeserializeObject<dynamic>(stringResponse);
-
                     UserToken userToken = JsonConvert.DeserializeObject<UserToken>(stringResponse);
-                    Settings.Jwt = userToken.Token;
+                    var decoded = new JwtBuilder().Decode(stringResponse);
+                    var userExp = JsonConvert.DeserializeObject<UserExp>(decoded);
 
-                    //DateTime accessTokenExpiration = jwtJObject.Value<DateTime>(".expires"); // FIXME
-                    //Settings.JwtExpirationDate = accessTokenExpiration;
+                    Settings.JwtExpirationDate = DateTimeOffset.FromUnixTimeSeconds(long.Parse(userExp.Exp)).DateTime;
 
                     return response.IsSuccessStatusCode;
                 }
@@ -58,5 +60,11 @@ namespace OfficeAppMobile.Services
     {
         [JsonProperty("token")]
         public string Token { get; set; }
+    }
+
+    internal class UserExp
+    {
+        [JsonProperty("exp")]
+        public string Exp { get; set; }
     }
 }

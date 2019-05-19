@@ -1,8 +1,5 @@
 ﻿using Prism.Commands;
-using Prism.Mvvm;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using Newtonsoft.Json;
 using OfficeAppMobile.Models;
@@ -75,7 +72,7 @@ namespace OfficeAppMobile.ViewModels
         });
 
         public DelegateCommand LogoutCommand => new DelegateCommand(async () =>
-            await NavigationService.NavigateAsync("/NavigationPage/LoginPage")
+            await NavigationService.NavigateAsync("/LoginPage")
         );
     }
 }

@@ -32,7 +32,7 @@ namespace OfficeApp.Helpers
         }
         public static DateTime JwtExpirationDate
         {
-            get => AppSettings.GetValueOrDefault("JwtExpirationDate", DateTime.UtcNow);
+            get => AppSettings.GetValueOrDefault("JwtExpirationDate", DateTime.Now);
             set => AppSettings.AddOrUpdateValue("JwtExpirationDate", value);
         }
     }

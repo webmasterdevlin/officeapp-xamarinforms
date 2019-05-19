@@ -1,8 +1,5 @@
 ﻿using Prism.Commands;
-using Prism.Mvvm;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using OfficeAppMobile.Models;
 using OfficeAppMobile.Services;
 using Prism.Navigation;

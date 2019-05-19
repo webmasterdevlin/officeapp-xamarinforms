@@ -1,17 +1,12 @@
 ﻿using Prism.Commands;
-using Prism.Mvvm;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using OfficeApp.Helpers;
-using OfficeAppMobile.Models;
 using OfficeAppMobile.Services;
 using Prism.Navigation;
 using Prism.Services;
-using System.Net;
 
 namespace OfficeAppMobile.ViewModels
 {
@@ -58,7 +53,6 @@ namespace OfficeAppMobile.ViewModels
             {
                 _response = await _departmentService.SendPostAsync(content);
                 await NavigationService.NavigateAsync("/NavigationPage/MainPage"); // reset the Navigation Stack
-
             }
             catch (Exception ex)
             {
