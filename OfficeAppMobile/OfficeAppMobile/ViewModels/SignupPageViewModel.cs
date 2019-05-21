@@ -44,32 +44,24 @@ namespace OfficeAppMobile.ViewModels
                 return;
             }
 
-            try
+            if (await SignupNewUser())
             {
-                await SignupNewUser();
-            }
-            catch (Exception ex)
-            {
-                await UnableToSignup(ex);
+                await GoToLogin();
+                return;
             }
 
+            await PageDialogService.DisplayAlertAsync("Password is 6-12 characters", "Please try again.",
+                              "Ok");
         });
 
-        private async Task UnableToSignup(Exception ex)
+        private async Task<bool> SignupNewUser()
         {
-            await PageDialogService.DisplayAlertAsync("Soemthing happened", ex.Message,
-                    "Ok");
-        }
-
-        private async Task SignupNewUser()
-        {
-            await _userService.SignupAsync(new User
+            return await _userService.SignupAsync(new User
             {
                 UserName = UserName,
                 Email = Email,
                 Password = Password
             });
-            await GoToLogin();
         }
     }
 }
