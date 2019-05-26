@@ -24,7 +24,7 @@
                         <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Label Grid.Row="0" FontSize="Large" HorizontalOptions="Center" Text="Departments" />
-        <ListView x:Name="DeptListView" Grid.Row="1" Grid.RowSpan="2" HasUnevenRows="True" ItemsSource="{Binding ObservableDepartments}" >
+        <ListView x:Name="DeptListView" CachingStrategy="RecycleElement" SeparatorColor="Transparent" Grid.Row="1" Grid.RowSpan="2" HasUnevenRows="True" ItemsSource="{Binding ObservableDepartments}" >
             <ListView.GestureRecognizers>
                 <SwipeGestureRecognizer></SwipeGestureRecognizer>
             </ListView.GestureRecognizers>
