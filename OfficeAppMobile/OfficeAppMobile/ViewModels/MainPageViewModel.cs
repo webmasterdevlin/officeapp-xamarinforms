@@ -10,6 +10,8 @@ using OfficeAppMobile.Models;
 using OfficeAppMobile.Services;
 using Prism.Services;
 using System.Threading.Tasks;
+using System.Diagnostics;
+using Prism.Ioc;
 
 namespace OfficeAppMobile.ViewModels
 {
@@ -31,15 +33,16 @@ namespace OfficeAppMobile.ViewModels
 
 
         public MainPageViewModel(INavigationService navigationService, IPageDialogService pageDialogService)
-            : base(navigationService, pageDialogService)
+             : base(navigationService, pageDialogService)
         {
             _client.DefaultRequestHeaders.Add("Authorization", $"Bearer {Settings.Jwt}");
+            UsedToBeOnNavigatingTo();
         }
 
         public DelegateCommand ToNewDepPageCommand => new DelegateCommand(() =>
             NavigationService.NavigateAsync("NewDepartmentPage"));
 
-        public override async void OnNavigatingTo(INavigationParameters parameters)
+        public async void UsedToBeOnNavigatingTo()
         {
             if (CheckIfJwtIsEmpty() || CheckIfJwtIsExpired())
             {
@@ -55,16 +58,11 @@ namespace OfficeAppMobile.ViewModels
             {
                 await UnableToLoadDepartments(ex);
             }
-
-            base.OnNavigatedTo(parameters);
         }
 
         public DelegateCommand<Department> EditDeleteCommand => new DelegateCommand<Department>(department =>
         {
-            var tappedCell = department;
-            var variableToPass = new NavigationParameters { { "(^_^)ImTheKey", tappedCell } };
-
-            NavigationService.NavigateAsync("EditDeleteDepartmentPage", variableToPass);
+            NavigationService.NavigateAsync("EditDeleteDepartmentPage", ("CurrentDepartment", department));
         });
 
         public DelegateCommand LogoutCommand => new DelegateCommand(() =>

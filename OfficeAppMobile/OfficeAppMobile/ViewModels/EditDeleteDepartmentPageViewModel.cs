@@ -7,6 +7,8 @@ using Prism.Navigation;
 using Prism.Services;
 using OfficeApp.Helpers;
 using System.Threading.Tasks;
+using Prism.Ioc;
+using Prism.Navigation.Xaml;
 
 namespace OfficeAppMobile.ViewModels
 {
@@ -31,12 +33,7 @@ namespace OfficeAppMobile.ViewModels
         {
         }
 
-        public override void OnNavigatingTo(INavigationParameters parameters)
-        {
-            GetDepartmentFromPreviousPage(parameters);
 
-            base.OnNavigatingTo(parameters);
-        }
 
         public DelegateCommand UpdateCommand => new DelegateCommand(async () =>
         {
@@ -75,22 +72,18 @@ namespace OfficeAppMobile.ViewModels
             }
         );
 
-        private void GetDepartmentFromPreviousPage(INavigationParameters parameters)
-        {
-            if (parameters.ContainsKey("(^_^)ImTheKey"))
-                CurrentDepartment = (Department)parameters["(^_^)ImTheKey"];
-        }
+
 
         private async Task Update(string content)
         {
             await _departmentService.SendPutAsync(CurrentDepartment, content);
-            await NavigationService.GoBackAsync();
+            await NavigationService.NavigateAsync("/NavigationPage/MainPage");
         }
 
         private async Task Remove()
         {
             await _departmentService.SendDeleteAsync(CurrentDepartment.Id);
-            await NavigationService.GoBackAsync();
+            await NavigationService.NavigateAsync("/NavigationPage/MainPage");
         }
 
         private async Task UnableToSendRequest(Exception ex)

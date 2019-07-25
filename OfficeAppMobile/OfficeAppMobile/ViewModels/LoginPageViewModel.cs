@@ -4,6 +4,7 @@ using OfficeAppMobile.Models;
 using OfficeAppMobile.Services;
 using Prism.Navigation;
 using Prism.Services;
+using Prism.Ioc;
 
 namespace OfficeAppMobile.ViewModels
 {

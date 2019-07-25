@@ -7,6 +7,7 @@ using OfficeApp.Helpers;
 using OfficeAppMobile.Services;
 using Prism.Navigation;
 using Prism.Services;
+using Prism.Ioc;
 
 namespace OfficeAppMobile.ViewModels
 {
@@ -60,11 +61,17 @@ namespace OfficeAppMobile.ViewModels
             }
         });
 
+        public DelegateCommand CancelCommand => new DelegateCommand(() =>
+        {
+            NavigationService.GoBackAsync();
+        });
+
         public DelegateCommand LogoutCommand => new DelegateCommand(() =>
         {
             Settings.Jwt = "";
             NavigationService.NavigateAsync("/LoginPage");
         }
-            );
+
+       );
     }
 }

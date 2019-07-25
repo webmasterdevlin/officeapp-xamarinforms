@@ -8,6 +8,7 @@ using Xamarin.Forms.Xaml;
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace OfficeAppMobile
 {
+    [AutoRegisterForNavigation]
     public partial class App
     {
         /* 
@@ -29,11 +30,6 @@ namespace OfficeAppMobile
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterForNavigation<NavigationPage>();
-            containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
-            containerRegistry.RegisterForNavigation<NewDepartmentPage, NewDepartmentPageViewModel>();
-            containerRegistry.RegisterForNavigation<EditDeleteDepartmentPage, EditDeleteDepartmentPageViewModel>();
-            containerRegistry.RegisterForNavigation<LoginPage, LoginPageViewModel>();
-            containerRegistry.RegisterForNavigation<SignupPage, SignupPageViewModel>();
         }
     }
 }

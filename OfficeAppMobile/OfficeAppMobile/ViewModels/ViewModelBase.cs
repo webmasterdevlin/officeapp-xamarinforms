@@ -2,10 +2,11 @@
 using Prism.Navigation;
 using System;
 using Prism.Services;
+using Prism.AppModel;
 
 namespace OfficeAppMobile.ViewModels
 {
-    public abstract class ViewModelBase : BindableBase, INavigationAware, IDestructible
+    public abstract class ViewModelBase : BindableBase, IAutoInitialize, IDestructible
     {
         private string _title;
 
@@ -24,29 +25,6 @@ namespace OfficeAppMobile.ViewModels
             PageDialogService = pageDialogService ?? throw new ArgumentNullException(nameof(pageDialogService));
         }
 
-        /// <summary>
-        /// Lifecycle event that runs before you leave the page
-        /// </summary>
-        /// <param name="parameters"></param>
-        public virtual void OnNavigatedFrom(INavigationParameters parameters)
-        {
-        }
-
-        /// <summary>
-        /// Lifecycle event that runs after the UI appears
-        /// </summary>
-        /// <param name="parameters"></param>
-        public virtual void OnNavigatedTo(INavigationParameters parameters)
-        {
-        }
-
-        /// <summary>
-        /// Lifecycle event that runs before the UI appears
-        /// </summary>
-        /// <param name="parameters"></param>
-        public virtual void OnNavigatingTo(INavigationParameters parameters)
-        {
-        }
 
         public virtual void Destroy()
         {
