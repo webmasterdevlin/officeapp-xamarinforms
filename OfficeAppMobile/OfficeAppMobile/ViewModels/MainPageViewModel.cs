@@ -15,7 +15,7 @@ using Prism.Ioc;
 
 namespace OfficeAppMobile.ViewModels
 {
-    public class MainPageViewModel : ViewModelBase
+    public class MainPageViewModel : ViewModelBase, IInitialize
     {
         private readonly HttpClient _client = new HttpClient();
         private readonly DepartmentService _departmentService = new DepartmentService();
@@ -36,13 +36,30 @@ namespace OfficeAppMobile.ViewModels
              : base(navigationService, pageDialogService)
         {
             _client.DefaultRequestHeaders.Add("Authorization", $"Bearer {Settings.Jwt}");
-            UsedToBeOnNavigatingTo();
+
         }
 
         public DelegateCommand ToNewDepPageCommand => new DelegateCommand(() =>
             NavigationService.NavigateAsync("NewDepartmentPage"));
 
-        public async void UsedToBeOnNavigatingTo()
+        public async void Initialize(INavigationParameters parameters)
+        {
+            await IsAuthenticated();
+        }
+
+        public DelegateCommand<Department> EditDeleteCommand => new DelegateCommand<Department>(department =>
+        {
+            NavigationService.NavigateAsync("EditDeleteDepartmentPage", ("CurrentDepartment", department));
+        });
+
+        public DelegateCommand LogoutCommand => new DelegateCommand(() =>
+          {
+              Settings.Jwt = "";
+              NavigationService.NavigateAsync("/LoginPage");
+          }
+        );
+
+        private async Task IsAuthenticated()
         {
             if (CheckIfJwtIsEmpty() || CheckIfJwtIsExpired())
             {
@@ -59,18 +76,6 @@ namespace OfficeAppMobile.ViewModels
                 await UnableToLoadDepartments(ex);
             }
         }
-
-        public DelegateCommand<Department> EditDeleteCommand => new DelegateCommand<Department>(department =>
-        {
-            NavigationService.NavigateAsync("EditDeleteDepartmentPage", ("CurrentDepartment", department));
-        });
-
-        public DelegateCommand LogoutCommand => new DelegateCommand(() =>
-          {
-              Settings.Jwt = "";
-              NavigationService.NavigateAsync("/LoginPage");
-          }
-        );
 
         private async Task LoadDepartments()
         {
