@@ -6,7 +6,7 @@
     <ItemGroup>
         <PackageReference Include="JWT" Version="5.2.2" />
         <PackageReference Include="Microsoft.CSharp" Version="4.5.0" />
-        <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
         <PackageReference Include="Xam.Plugins.Settings" Version="3.1.1" />
         <PackageReference Include="Xamarin.Forms" Version="4.1.0.618606" />
         <PackageReference Include="Xamarin.Forms.Visual.Material" Version="4.1.0.618606" />
